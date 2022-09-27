@@ -1,0 +1,54 @@
+
+CSS FILE
+body {
+width: 100vw;
+margin: 0 auto;
+font-family: sans-serif;
+background-color: aliceblue;
+}
+.form-group {
+width: 400px;
+margin: 30px 0;
+display: flex;
+align-items: center;
+justify-content: space-between;
+}
+label {
+font-weight: bold;
+}
+input[type='text'],
+input[type='email'],
+input[type='number'] {
+width: 250px;
+}
+button {
+width: 45%;
+height: 30px;
+}
+Assignment-3
+HTML FILE
+<html>
+ <body>
+ <form action = "http://localhost:5000/login" method = "post">
+ <p>Enter Name:</p>
+ <p><input type = "text" name = "nm" /></p>
+ <p><input type = "submit" value = "submit" /></p>
+ </form> 
+ </body>
+</html>
+PYTHON FILE
+from flask import Flask, redirect, url_for, request
+app = Flask(__name__)
+@app.route('/success/<name>')
+def success(name):
+ return 'welcome %s' % name
+@app.route('/login',methods = ['POST', 'GET'])
+def login():
+ if request.method == 'POST':
+ user = request.form['nm']
+ return redirect(url_for('success',name = user))
+ else:
+ user = request.args.get('nm')
+ return redirect(url_for('success',name = user))
+if __name__ == '__main__':
+ app.run(debug = True)
